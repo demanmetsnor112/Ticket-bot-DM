@@ -309,22 +309,21 @@ class Utility(commands.Cog):
         """Shows information about this bot."""
         embed = discord.Embed(color=self.bot.main_color, timestamp=datetime.utcnow())
         embed.set_author(
-            name="Modmail - About",
+            name="Deze bot - About",
             icon_url=self.bot.user.avatar_url,
-            url="https://discord.gg/F34cRU8",
         )
         embed.set_thumbnail(url=self.bot.user.avatar_url)
 
-        desc = "This is an open source Discord bot that serves as a means for "
-        desc += "members to easily communicate with server administrators in "
-        desc += "an organised manner."
+        desc = "Dit is een gratis en non-proprietary discord bot "
+        desc += "die members en staffleden makkelijk laat communiceren in "
+        desc += "een georganiseerde manier."
         embed.description = desc
 
         embed.add_field(name="Uptime", value=self.bot.uptime)
-        embed.add_field(name="Latency", value=f"{self.bot.latency * 1000:.2f} ms")
-        embed.add_field(name="Version", value=f"`{self.bot.version}`")
-        embed.add_field(name="Authors", value="`kyb3r`, `Taki`, `fourjr`")
-        embed.add_field(name="Hosting Method", value=self.bot.hosting_method.name)
+        embed.add_field(name="Latency", value=f"{self.bot.latency * 100000:.2f} ms")
+        embed.add_field(name="Versie", value=f"`{self.bot.version}`")
+        embed.add_field(name="auteurs en mensen die hebben meegewerkt", value="kyb3r,taki,fourjr,dev")
+        embed.add_field(name="Hosting Methode", value="dev")
 
         changelog = await Changelog.from_url(self.bot)
         latest = changelog.latest_version
@@ -334,25 +333,24 @@ class Utility(commands.Cog):
                 filter(lambda v: not parse_version(v.version).is_prerelease, changelog.versions)
             )
             footer = (
-                f"You are on the prerelease version • the latest version is v{stable.version}."
+                f"You are on the beta version • the latest version is v{stable.version}."
             )
         elif self.bot.version < parse_version(latest.version):
-            footer = f"A newer version is available v{latest.version}."
+            footer = f"Er is een nieuwe versie: v{latest.version}."
         else:
-            footer = "You are up to date with the latest version."
+            footer = "Je hebt de laatste versie."
 
         embed.add_field(
-            name="Want Modmail in Your Server?",
-            value="Follow the installation guide on [GitHub](https://github.com/kyb3r/modmail/) "
-            "and join our [Discord server](https://discord.gg/F34cRU8)!",
+            name="Wil je deze bot in je server?",
+            value="Dm dev voor deze versie (gratis en voor niks! :) ), of host je eigen Engelse en normale versie via: [GitHub](https://github.com/kyb3r/modmail/)"
             inline=False,
         )
 
         embed.add_field(
-            name="Support the Developers",
-            value="This bot is completely free for everyone. We rely on kind individuals "
-            "like you to support us on [`Patreon`](https://patreon.com/kyber) (perks included) "
-            "to keep this bot free forever!",
+            name="Support de makers",
+            value="Deze bot is gratis voor iedereen en is zelf hosted, daarom heeft kyb3r geld nodig om te overleven "
+            "Je kunt geld doneren aan kyb3r via [`Patreon`](https://patreon.com/kyber) "
+            "De basis van deze bot is geforkt, daarna vertaald en deels verbeterd door dev, ik wil geen winst maken uit deze bot en daarom gaat al het geld 100% naar de hosting.",
             inline=False,
         )
 
@@ -402,7 +400,7 @@ class Utility(commands.Cog):
                 title="Debug Logs:",
                 description="You don't have any logs at the moment.",
             )
-            embed.set_footer(text="Go to Heroku to see your logs.")
+            embed.set_footer(text="Go to see your logs.")
             return await ctx.send(embed=embed)
 
         messages = []
