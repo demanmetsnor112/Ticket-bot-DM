@@ -100,11 +100,11 @@ class Modmail(commands.Cog):
         embed.add_field(
             name="bedankt voor het installeren van deze bot!",
             value="Deze bot is oorspronkelijk gemaakt door Kyb3r. "
-            "De basis van deze bot is geforkt, daarna vertaald en een beetje verbeterd door dev. "
-            "Je kunt de oorspronkelijke maker van deze bot bedanken via [Patreon](https://patreon.com/kyber), ik wil geen winst maken uit deze bot en daarom gaat al het geld gaat naar de hosting.",
+            "De basis van deze bot is geforkt, daarna vertaald en deels verbeterd door dev. "
+            "Je kunt de oorspronkelijke maker van deze bot bedanken via [Patreon](https://patreon.com/kyber), ik wil geen winst maken uit deze bot en daarom gaat al het geld naar de hosting.",
         )
 
-        embed.set_footer(text=f'Type "{self.bot.prefix}help" for a complete list of commands.')
+        embed.set_footer(text=f'Typ "{self.bot.prefix}help" voor een complete lijst van commandos.')
         await log_channel.send(embed=embed)
 
         self.bot.config["main_category_id"] = category.id
@@ -129,24 +129,24 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.SUPPORTER)
     async def snippet(self, ctx, *, name: str.lower = None):
         """
-        Create pre-defined messages for use in threads.
+        Maak vooraf ingestelde berichten voor gebruik in tickets.
 
-        When `{prefix}snippet` is used by itself, this will retrieve
-        a list of snippets that are currently set. `{prefix}snippet-name` will show what the
-        snippet point to.
+        Wanneer `{prefix}snippet` zelf wordt gebruikt, zal dit
+        een lijst van snippets die momenteel zijn ingesteld laten zien. `{prefix}snippet-name` zal laten zien waar de
+        snippet naar wijst.
 
-        To create a snippet:
-        - `{prefix}snippet add snippet-name A pre-defined text.`
+        Om een snippet te maken:
+        - `{prefix}snippet add snippet-naam Een vooraf ingestelde tekst.`
 
-        You can use your snippet in a thread channel
-        with `{prefix}snippet-name`, the message "A pre-defined text."
-        will be sent to the recipient.
+        U kunt uw knipsel gebruiken in een ticket kanaal
+        met `{prefix}snippet-naam`, het bericht "Een vooraf ingestelde tekst."
+        zal verstuurd worden naar de ontvanger.
 
-        Currently, there is not a built-in anonymous snippet command; however, a workaround
-        is available using `{prefix}alias`. Here is how:
-        - `{prefix}alias add snippet-name anonreply A pre-defined anonymous text.`
+        Momenteel is er geen ingebouwd anoniem snippet commando; er is echter een workaround
+        is beschikbaar met behulp van `{prefix}alias`. Hier is hoe:
+        - `{prefix}alias add snippet-naam anonreply Een vooraf ingestelde tekst..`
 
-        See also `{prefix}alias`.
+        Zie ook `{prefix}alias`.
         """
 
         if name is not None:
@@ -161,9 +161,9 @@ class Modmail(commands.Cog):
 
         if not self.bot.snippets:
             embed = discord.Embed(
-                color=self.bot.error_color, description="You dont have any snippets at the moment."
+                color=self.bot.error_color, description="Je hebt geen snippets op dit moment."
             )
-            embed.set_footer(text=f'Check "{self.bot.prefix}help snippet add" to add a snippet.')
+            embed.set_footer(text=f'Check "{self.bot.prefix}help snippet add" om een snippet toe te voegen.')
             embed.set_author(name="Snippets", icon_url=ctx.guild.icon_url)
             return await ctx.send(embed=embed)
 
@@ -201,22 +201,22 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.SUPPORTER)
     async def snippet_add(self, ctx, name: str.lower, *, value: commands.clean_content):
         """
-        Add a snippet.
+        Voeg een snippet toe.
 
-        Simply to add a snippet, do: ```
-        {prefix}snippet add hey hello there :)
+        Om eenvoudig een snippet toe te voegen, doe: ```
+        {prefix}snippet add welkom Welkom bij Foldum Support! :)
         ```
-        then when you type `{prefix}hey`, "hello there :)" will get sent to the recipient.
+        Wanneer je dan dit typt: `{prefix}welkom`, wordt er dit verzonden naar de ontvanger: "Welkom bij Foldum Support! :)"
 
-        To add a multi-word snippet name, use quotes: ```
-        {prefix}snippet add "two word" this is a two word snippet.
+        Om een snippet naam met meerdere woorden toe te voegen, gebruik je aanhalingstekens: ```
+        {prefix}snippet add "twee woorden" dit is een knipsel van twee woorden.
         ```
         """
         if name in self.bot.snippets:
             embed = discord.Embed(
                 title="Error",
                 color=self.bot.error_color,
-                description=f"Snippet `{name}` already exists.",
+                description=f"Snippet `{name}` bestaat al.",
             )
             return await ctx.send(embed=embed)
 
@@ -224,7 +224,7 @@ class Modmail(commands.Cog):
             embed = discord.Embed(
                 title="Error",
                 color=self.bot.error_color,
-                description=f"An alias that shares the same name exists: `{name}`.",
+                description=f"Er bestaat een snippet met dezelfde naam: `{name}`.",
             )
             return await ctx.send(embed=embed)
 
@@ -232,7 +232,7 @@ class Modmail(commands.Cog):
             embed = discord.Embed(
                 title="Error",
                 color=self.bot.error_color,
-                description="Snippet names cannot be longer than 120 characters.",
+                description="Namen van snippets mogen niet langer zijn dan 120 tekens.",
             )
             return await ctx.send(embed=embed)
 
@@ -240,9 +240,9 @@ class Modmail(commands.Cog):
         await self.bot.config.update()
 
         embed = discord.Embed(
-            title="Added snippet",
+            title="snippet toegevoegd",
             color=self.bot.main_color,
-            description="Successfully created snippet.",
+            description="Succesvol snippet gemaakt.",
         )
         return await ctx.send(embed=embed)
 
@@ -255,7 +255,7 @@ class Modmail(commands.Cog):
             embed = discord.Embed(
                 title="Removed snippet",
                 color=self.bot.main_color,
-                description=f"Snippet `{name}` is now deleted.",
+                description=f"Snippet `{name}` is nu gedelete.",
             )
             self.bot.snippets.pop(name)
             await self.bot.config.update()
@@ -267,10 +267,10 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.SUPPORTER)
     async def snippet_edit(self, ctx, name: str.lower, *, value):
         """
-        Edit a snippet.
+        Bewerk een snippet.
 
-        To edit a multi-word snippet name, use quotes: ```
-        {prefix}snippet edit "two word" this is a new two word snippet.
+        Om een snippet naam met meerdere woorden te bewerken, gebruikt u aanhalingstekens: ```
+        {prefix}snippet edit "twee woorden" dit is een nieuw twee woorden snippet.
         ```
         """
         if name in self.bot.snippets:
@@ -278,9 +278,9 @@ class Modmail(commands.Cog):
             await self.bot.config.update()
 
             embed = discord.Embed(
-                title="Edited snippet",
+                title="snippet aangepast",
                 color=self.bot.main_color,
-                description=f'`{name}` will now send "{value}".',
+                description=f'`{name}` stuurt nu "{value}".',
             )
         else:
             embed = create_not_found_embed(name, self.bot.snippets.keys(), "Snippet")
@@ -291,10 +291,10 @@ class Modmail(commands.Cog):
     @checks.thread_only()
     async def move(self, ctx, *, arguments):
         """
-        Move a thread to another category.
+        Verplaats een ticket naar een andere categorie.
 
-        `category` may be a category ID, mention, or name.
-        `options` is a string which takes in arguments on how to perform the move. Ex: "silently"
+        `category` kan een categorie ID, vermelding of naam zijn.
+        `options` is een string die argumenten opneemt over hoe de doorverwijzing moet worden uitgevoerd. Bijvoorbeeld: "silently" wanneer de klant de doorverwijzing niet mag merken.
         """
         split_args = arguments.strip('"').split(" ")
         category = None
@@ -341,9 +341,9 @@ class Modmail(commands.Cog):
         if self.bot.config["thread_move_notify_mods"]:
             mention = self.bot.config["mention"]
             if mention is not None:
-                msg = f"{mention}, thread has been moved."
+                msg = f"{mention}, ticket is verplaatst."
             else:
-                msg = "Thread has been moved."
+                msg = "ticket is verplaatst."
             await thread.channel.send(msg)
 
         sent_emoji, _ = await self.bot.retrieve_emoji()
@@ -355,15 +355,15 @@ class Modmail(commands.Cog):
         silent = "*silently* " if silent else ""
 
         embed = discord.Embed(
-            title="Scheduled close",
-            description=f"This thread will close {silent}in {human_delta}.",
+            title="Geplande sluiting",
+            description=f"Deze ticket zal sluiten {silent} in {human_delta}.",
             color=self.bot.error_color,
         )
 
         if after.arg and not silent:
             embed.add_field(name="Message", value=after.arg)
 
-        embed.set_footer(text="Closing will be cancelled if a thread message is sent.")
+        embed.set_footer(text="Het sluiten wordt geannuleerd als een ticketbericht wordt verzonden.")
         embed.timestamp = after.dt
 
         await ctx.send(embed=embed)
@@ -373,21 +373,21 @@ class Modmail(commands.Cog):
     @checks.thread_only()
     async def close(self, ctx, *, after: UserFriendlyTime = None):
         """
-        Close the current thread.
+        Sluit het huidige ticket.
 
-        Close after a period of time:
+        Sluiten na een bepaalde tijd:
         - `{prefix}close in 5 hours`
         - `{prefix}close 2m30s`
 
-        Custom close messages:
-        - `{prefix}close 2 hours The issue has been resolved.`
-        - `{prefix}close We will contact you once we find out more.`
+        Aangepaste sluitingsberichten:
+        - `{prefix}close 2 hours Het probleem is opgelost.`
+        - `{prefix}close We zullen contact met je opnemen zodra we meer weten.`
 
-        Silently close a thread (no message)
+        Een thread stilletjes sluiten (geen bericht)
         - `{prefix}close silently`
         - `{prefix}close in 10m silently`
 
-        Stop a thread from closing:
+        Stop het sluiten van een thread:
         - `{prefix}close cancel`
         """
 
@@ -405,12 +405,12 @@ class Modmail(commands.Cog):
             if thread.close_task is not None or thread.auto_close_task is not None:
                 await thread.cancel_closure(all=True)
                 embed = discord.Embed(
-                    color=self.bot.error_color, description="Scheduled close has been cancelled."
+                    color=self.bot.error_color, description="Geplande sluiting is geannuleerd."
                 )
             else:
                 embed = discord.Embed(
                     color=self.bot.error_color,
-                    description="This thread has not already been scheduled to close.",
+                    description="Dit ticket is nog niet gepland om te sluiten.",
                 )
 
             return await ctx.send(embed=embed)
@@ -1308,7 +1308,7 @@ class Modmail(commands.Cog):
             embed = discord.Embed(
                 title="Success",
                 color=self.bot.main_color,
-                description=f"{mention} is now blocked {reason}",
+                description=f"{mention} is nu geblokkeerd {reason}",
             )
 
         if isinstance(user_or_role, discord.Role):
@@ -1324,7 +1324,7 @@ class Modmail(commands.Cog):
     @trigger_typing
     async def unblock(self, ctx, *, user_or_role: Union[User, Role] = None):
         """
-        Unblock a user from using Modmail.
+        Unblock a user from using this bot.
 
         Leave `user` blank when this command is used within a
         thread channel to unblock the current recipient.
@@ -1354,8 +1354,8 @@ class Modmail(commands.Cog):
                 reason = msg[16:].strip().rstrip(".") or "no reason"
                 embed = discord.Embed(
                     title="Success",
-                    description=f"{mention} was previously blocked internally {reason}.\n"
-                    f"{mention} is no longer blocked.",
+                    description=f"{mention} was eerder intern geblokkerd met reden {reason}.\n"
+                    f"{mention} is niet langer geblokkeerd",
                     color=self.bot.main_color,
                 )
                 embed.set_footer(
@@ -1441,7 +1441,7 @@ class Modmail(commands.Cog):
         )
         if thread is not None:
             logger.debug("Found thread with tempered ID.")
-            await ctx.channel.edit(reason="Fix broken Modmail thread", topic=f"User ID: {user_id}")
+            await ctx.channel.edit(reason="Fix broken ticket", topic=f"User ID: {user_id}")
             return await self.bot.add_reaction(ctx.message, sent_emoji)
 
         # find genesis message to retrieve User ID
@@ -1469,7 +1469,7 @@ class Modmail(commands.Cog):
                         "Setting current channel's topic to User ID and created new thread."
                     )
                     await ctx.channel.edit(
-                        reason="Fix broken Modmail thread", topic=f"User ID: {user_id}"
+                        reason="Fix broken ticket", topic=f"User ID: {user_id}"
                     )
                     return await self.bot.add_reaction(ctx.message, sent_emoji)
 
@@ -1518,7 +1518,7 @@ class Modmail(commands.Cog):
                 thread.ready = True
                 logger.info("Setting current channel's topic to User ID and created new thread.")
                 await ctx.channel.edit(
-                    reason="Fix broken Modmail thread", name=name, topic=f"User ID: {user.id}"
+                    reason="Fix broken ticket", name=name, topic=f"User ID: {user.id}"
                 )
                 return await self.bot.add_reaction(ctx.message, sent_emoji)
 
@@ -1530,13 +1530,13 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def enable(self, ctx):
         """
-        Re-enables DM functionalities of Modmail.
+        Zet de DM functionaliteiten van deze bot weer aan.
 
-        Undo's the `{prefix}disable` command, all DM will be relayed after running this command.
+        Maakt het `{prefix}disable` commando ongedaan, alle DM zullen worden doorgestuurd na het uitvoeren van dit commando.
         """
         embed = discord.Embed(
             title="Success",
-            description="Modmail will now accept all DM messages.",
+            description="Deze bot zal nu alle DM berichten accepteren.",
             color=self.bot.main_color,
         )
 
@@ -1550,11 +1550,11 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def disable(self, ctx):
         """
-        Disable partial or full Modmail thread functions.
+        Schakel deze bot ticket functies gedeeltelijk of volledig uit.
 
-        To stop all new threads from being created, do `{prefix}disable new`.
-        To stop all existing threads from DMing Modmail, do `{prefix}disable all`.
-        To check if the DM function for Modmail is enabled, do `{prefix}isenable`.
+        Om het aanmaken van nieuwe tickets te verhinderen, doe `{prefix}disable new`.
+        Om te voorkomen dat alle bestaande tickets deze bot DM-en, doe `{prefix}disable all`.
+        Om te controleren of de DM functie voor deze bot is ingeschakeld, doe `{prefix}isenable`.
         """
         await ctx.send_help(ctx.command)
 
@@ -1562,13 +1562,13 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def disable_new(self, ctx):
         """
-        Stop accepting new Modmail threads.
+        Stop met het accepteren van nieuwe tickets.
 
-        No new threads can be created through DM.
+        Er kunnen geen nieuwe threads worden aangemaakt via DM.
         """
         embed = discord.Embed(
             title="Success",
-            description="Modmail will not create any new threads.",
+            description="Deze bot zal geen nieuwe tickets aanmaken.",
             color=self.bot.main_color,
         )
         if self.bot.config["dm_disabled"] < DMDisabled.NEW_THREADS:
@@ -1581,13 +1581,13 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def disable_all(self, ctx):
         """
-        Disables all DM functionalities of Modmail.
+        Schakelt alle DM functionaliteiten van deze bot uit.
 
-        No new threads can be created through DM nor no further DM messages will be relayed.
+        Er kunnen geen nieuwe tickets worden aangemaakt via DM en er zullen geen DM-berichten meer worden doorgestuurd.
         """
         embed = discord.Embed(
             title="Success",
-            description="Modmail will not accept any DM messages.",
+            description="Deze bot zal geen DM berichten meer accepteren.",
             color=self.bot.main_color,
         )
 
@@ -1601,25 +1601,25 @@ class Modmail(commands.Cog):
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def isenable(self, ctx):
         """
-        Check if the DM functionalities of Modmail is enabled.
+        Controleer of de DM functionaliteit van deze bot is ingeschakeld.
         """
 
         if self.bot.config["dm_disabled"] == DMDisabled.NEW_THREADS:
             embed = discord.Embed(
-                title="New Threads Disabled",
-                description="Modmail is not creating new threads.",
+                title="Nieuwe Tickets Uitgeschakeld",
+                description="Deze bot maakt geen nieuwe tickets meer aan.",
                 color=self.bot.error_color,
             )
         elif self.bot.config["dm_disabled"] == DMDisabled.ALL_THREADS:
             embed = discord.Embed(
-                title="All DM Disabled",
-                description="Modmail is not accepting any DM messages for new and existing threads.",
+                title="Alle DM tickets Uitgeschakeld",
+                description="deze bot accepteert geen DM berichten voor nieuwe en bestaande tickets.",
                 color=self.bot.error_color,
             )
         else:
             embed = discord.Embed(
-                title="Enabled",
-                description="Modmail now is accepting all DM messages.",
+                title="Ingeschakeld",
+                description="Deze bot accepteert nu alle DM berichten.",
                 color=self.bot.main_color,
             )
 
