@@ -80,7 +80,7 @@ class Modmail(commands.Cog):
                     overwrites[key] = discord.PermissionOverwrite(read_messages=True)
 
         category = await self.bot.modmail_guild.create_category(
-            name="Modmail", overwrites=overwrites
+            name="Algemene Tickets", overwrites=overwrites
         )
 
         await category.edit(position=0)
