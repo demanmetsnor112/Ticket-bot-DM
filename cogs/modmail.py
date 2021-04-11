@@ -43,17 +43,17 @@ class Modmail(commands.Cog):
 
         if ctx.guild != self.bot.modmail_guild:
             return await ctx.send(
-                f"You can only setup in the Modmail guild: {self.bot.modmail_guild}."
+                f"Je kunt de setup alleen in de ingestelde server uitvoeren: {self.bot.modmail_guild}."
             )
 
         if self.bot.main_category is not None:
             logger.debug("Can't re-setup server, main_category is found.")
-            return await ctx.send(f"{self.bot.modmail_guild} is already set up.")
+            return await ctx.send(f"{self.bot.modmail_guild} is al ingesteld.")
 
         if self.bot.modmail_guild is None:
             embed = discord.Embed(
                 title="Error",
-                description="Modmail functioning guild not found.",
+                description="Error 01",
                 color=self.bot.error_color,
             )
             return await ctx.send(embed=embed)
@@ -90,18 +90,18 @@ class Modmail(commands.Cog):
         )
 
         embed = discord.Embed(
-            title="Friendly Reminder",
-            description=f"You may use the `{self.bot.prefix}config set log_channel_id "
-            "<channel-id>` command to set up a custom log channel, then you can delete this default "
+            title="Vriendelijke herinnering",
+            description=f"Je kunt het `{self.bot.prefix}config set log_channel_id "
+            "<channel-id>` commando gebruiken om een eigen log kanaal op te geven, zodra je dat gedaan hebt kun je het default log kanaal verwijderen "
             f"{log_channel.mention} log channel.",
             color=self.bot.main_color,
         )
 
         embed.add_field(
-            name="Thanks for using our bot!",
-            value="If you like what you see, consider giving the "
-            "[repo a star](https://github.com/kyb3r/modmail) :star: and if you are "
-            "feeling extra generous, buy us coffee on [Patreon](https://patreon.com/kyber) :heart:!",
+            name="bedankt voor het installeren van deze bot!",
+            value="Deze bot is oorspronkelijk gemaakt door Kyb3r. "
+            "De basis van deze bot is geforkt, daarna vertaald en een beetje verbeterd door dev. "
+            "Je kunt de oorspronkelijke maker van deze bot bedanken via [Patreon](https://patreon.com/kyber), ik wil geen winst maken uit deze bot en daarom gaat al het geld gaat naar de hosting.",
         )
 
         embed.set_footer(text=f'Type "{self.bot.prefix}help" for a complete list of commands.')
@@ -112,12 +112,12 @@ class Modmail(commands.Cog):
 
         await self.bot.config.update()
         await ctx.send(
-            "**Successfully set up server.**\n"
-            "Consider setting permission levels to give access to roles "
-            "or users the ability to use Modmail.\n\n"
-            f"Type:\n- `{self.bot.prefix}permissions` and `{self.bot.prefix}permissions add` "
-            "for more info on setting permissions.\n"
-            f"- `{self.bot.prefix}config help` for a list of available customizations."
+            "**Server met succes ingesteld.**\n"
+            "Overweeg toestemmingsniveaus in te stellen om toegang te geven tot bepaalde rollen "
+            "of stel gebruikers in die de bot mogen gebruiken.\n\n"
+            f"Typ:\n- `{self.bot.prefix}permissions` en `{self.bot.prefix}permissions add` "
+            "voor meer info over het instellen van permissies.\n"
+            f"- `{self.bot.prefix}config help` voor een lijst van beschikbare aanpassingen."
         )
 
         if not self.bot.config["command_permissions"] and not self.bot.config["level_permissions"]:
