@@ -342,7 +342,7 @@ class Utility(commands.Cog):
 
         embed.add_field(
             name="Wil je deze bot in je server?",
-            value="Dm dev voor deze versie (gratis en voor niks! :) ), of host je eigen Engelse en normale versie via: [GitHub](https://github.com/kyb3r/modmail/)"
+            value="Dm dev voor deze versie (gratis en voor niks! :) ), of host je eigen Engelse en normale versie via: [GitHub](https://github.com/kyb3r/modmail/)",
             inline=False,
         )
 
